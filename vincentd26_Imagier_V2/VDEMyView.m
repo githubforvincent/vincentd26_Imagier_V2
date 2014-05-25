@@ -10,10 +10,14 @@
 #import "VDEMyView.h"
 #import "VDEPhotoPourAfficher.h"
 #import "VDEViewController.h"
+#import "VDEUsineComposants.h"
+
 
 @interface VDEMyView ()
 
 @property (nonatomic, strong) VDEPhotoPourAfficher *vdePhotoPourAfficher;
+
+@property (nonatomic, strong) VDEUsineComposants *usineComposants;
 
 @end
 
@@ -31,7 +35,10 @@
 	if( self) {
 		
 	self.vdeViewControllerImagier	= [[VDEViewController alloc] init];
-		self.vdePhotoPourAfficher	= [[VDEPhotoPourAfficher alloc]init];
+	self.vdePhotoPourAfficher	= [[VDEPhotoPourAfficher alloc]init];
+		
+	//initialisation de l'usine à composants
+	self.usineComposants = [[VDEUsineComposants alloc]init];
 
     // Détermination type de terminal si besoin par la suite
 	//--------------------------------------------------------------------------------------------------------
@@ -106,18 +113,22 @@
 	
 	//configuration  du slider largeur
     //--------------------------------------------------------------------------------------------------------
-    vdeSliderLargeur					= [[UISlider alloc] init];
-    vdeSliderLargeur.minimumValue		= 10;
-    vdeSliderLargeur.maximumValue		= 200;
-    vdeSliderLargeur.continuous			= YES;
-    vdeSliderLargeur.value				= vdeValeurZoomDeDepart;
-	vdeSliderLargeur.minimumValueImage	= [UIImage imageNamed:@"largeur_gris"];
+		
+	vdeSliderLargeur = [self.usineComposants construireUISliderMin:10
+															   max:200
+														continuous:YES
+														   initial:vdeValeurZoomDeDepart
+														 miniImage:@"largeur_gris"
+														 maxiImage:nil];
+
     [vdeSliderLargeur addTarget:self action:@selector(vdeActionSliderLargeur:) forControlEvents:UIControlEventValueChanged ];
 	
     [vdeSousVueBas addSubview:vdeSliderLargeur];
 	
 	// configuration du label ratio largeur
 	//--------------------------------------------------------------------------------------------------------
+		
+		
 	vdeLabelRatioLargeur					= [[UILabel alloc ]init];
 	vdeLabelRatioLargeur.TextAlignment		= NSTextAlignmentRight;
 	vdeLabelRatioLargeur.font				= [UIFont systemFontOfSize:14];
@@ -128,12 +139,16 @@
 		
 	//configuration  du slider hauteur
     //--------------------------------------------------------------------------------------------------------
-    vdeSliderHauteur			   = [[UISlider alloc] init];
-    vdeSliderHauteur.minimumValue  = 10;
-    vdeSliderHauteur.maximumValue  = 200;
-    vdeSliderHauteur.continuous    = YES;
-    vdeSliderHauteur.value         = vdeValeurZoomDeDepart;
-	vdeSliderHauteur.minimumValueImage	= [UIImage imageNamed:@"hauteur_gris"];
+    
+	vdeSliderHauteur = [self.usineComposants construireUISliderMin:10
+															   max:200
+														continuous:YES
+														   initial:vdeValeurZoomDeDepart
+														 miniImage:@"hauteur_gris"
+														 maxiImage:nil];
+		
+		
+		
     [vdeSliderHauteur addTarget:self action:@selector(vdeActionSliderHauteur:) forControlEvents:UIControlEventValueChanged ];
 	
 	[vdeSousVueBas addSubview:vdeSliderHauteur];
